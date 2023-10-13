@@ -1,0 +1,115 @@
+{
+	"info": {
+		"_postman_id": "5ad623dd-a3dd-4a30-896a-03f7db422014",
+		"name": "API Testing-OCR",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1281769"
+	},
+	"item": [
+		{
+			"name": "{{baseURL}}/identity/ocr",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response is correct \", function () {",
+							"    let jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.be.an(\"object\");",
+							"    pm.expect(jsonData.id).to.be.a(\"string\");",
+							"    pm.expect(jsonData.name).to.be.a(\"string\");",
+							"    pm.expect(jsonData.birthday).to.be.a(\"string\");",
+							"    pm.expect(jsonData.address).to.be.a(\"string\");",
+							"",
+							"    let expectedId = pm.collectionVariables.get(\"expectedId\");",
+							"    let expectedName = pm.collectionVariables.get(\"expectedName\");",
+							"    let expectedBirthday = pm.collectionVariables.get(\"expectedBirthday\");",
+							"    let expectedAddress = pm.collectionVariables.get(\"expectedAddress\");",
+							"",
+							"    pm.expect(jsonData.id).to.be.eql(expectedId);",
+							"    pm.expect(jsonData.name).to.be.eql(expectedName);",
+							"    pm.expect(jsonData.birthday).to.be.eql(expectedBirthday);",
+							"    pm.expect(jsonData.address).to.be.eql(expectedAddress);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept-encoding": true,
+					"connection": true,
+					"content-length": true,
+					"host": true,
+					"accept": true,
+					"user-agent": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"image\":{{ImageBase64OfIDCard}}\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/identity/ocr",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"identity",
+						"ocr"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "Amazon.com",
+			"type": "string"
+		},
+		{
+			"key": "ImageBase64OfIDCard",
+			"value": "TestData",
+			"type": "string"
+		}
+	]
+}
